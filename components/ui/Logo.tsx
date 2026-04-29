@@ -8,7 +8,7 @@ interface LogoProps {
   size?: 'sm' | 'md' | 'lg'
 }
 
-const sizes = { sm: 32, md: 48, lg: 64 }
+const sizes = { sm: 40, md: 56, lg: 72 }
 
 export function Logo({ variant = 'blue', showWordmark = true, size = 'md' }: LogoProps) {
   const markHeight = sizes[size]
@@ -47,7 +47,7 @@ export function Logo({ variant = 'blue', showWordmark = true, size = 'md' }: Log
             style={{
               fontFamily: "'Sora', sans-serif",
               fontWeight: 300,
-              fontSize: size === 'sm' ? '11px' : size === 'lg' ? '16px' : '13px',
+              fontSize: size === 'sm' ? '12px' : size === 'lg' ? '18px' : '15px',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
               color: wordmarkColor,
@@ -59,11 +59,11 @@ export function Logo({ variant = 'blue', showWordmark = true, size = 'md' }: Log
             style={{
               fontFamily: "'Sora', sans-serif",
               fontWeight: 300,
-              fontSize: size === 'sm' ? '8px' : size === 'lg' ? '11px' : '9px',
+              fontSize: size === 'sm' ? '9px' : size === 'lg' ? '12px' : '10px',
               letterSpacing: '0.18em',
               textTransform: 'uppercase',
               color: variant === 'white' ? 'rgba(255,255,255,0.65)' : '#6B849C',
-              marginTop: '3px',
+              marginTop: '4px',
             }}
           >
             Group

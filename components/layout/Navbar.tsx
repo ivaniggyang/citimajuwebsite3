@@ -5,18 +5,18 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/ui/Logo'
 
-const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact', label: 'Contact' },
-]
+interface NavSettings {
+  navAbout?: string
+  navServices?: string
+  navProjects?: string
+  navContact?: string
+  navCtaLabel?: string
+}
 
-export function Navbar() {
+export function Navbar({ settings }: { settings: NavSettings }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
-
   const isHome = pathname === '/'
 
   useEffect(() => {
@@ -25,10 +25,16 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
   const transparent = isHome && !scrolled && !menuOpen
+
+  const navLinks = [
+    { href: '/about', label: settings.navAbout || 'About' },
+    { href: '/services', label: settings.navServices || 'Services' },
+    { href: '/projects', label: settings.navProjects || 'Projects' },
+    { href: '/contact', label: settings.navContact || 'Contact' },
+  ]
 
   return (
     <header
@@ -45,22 +51,18 @@ export function Navbar() {
     >
       <div
         style={{
-          maxWidth: '1200px',
+          maxWidth: '1280px',
           margin: '0 auto',
           padding: '0 2rem',
-          height: '72px',
+          height: '88px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
       >
-        <Logo variant="white" size="sm" />
+        <Logo variant="white" size="md" />
 
-        {/* Desktop nav */}
-        <nav
-          style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}
-          className="hide-mobile"
-        >
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }} className="hide-mobile">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -89,38 +91,29 @@ export function Navbar() {
               letterSpacing: '0.06em',
               color: '#071E3D',
               background: '#C8921A',
-              padding: '0.5rem 1.25rem',
+              padding: '0.625rem 1.5rem',
               textDecoration: 'none',
               transition: 'background 0.2s',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#DBA830')}
             onMouseLeave={e => (e.currentTarget.style.background = '#C8921A')}
           >
-            Get In Touch
+            {settings.navCtaLabel || 'Get In Touch'}
           </Link>
         </nav>
 
-        {/* Hamburger */}
         <button
           className="show-mobile"
           onClick={() => setMenuOpen(v => !v)}
           aria-label="Toggle menu"
-          style={{
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '8px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-          }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', display: 'flex', flexDirection: 'column', gap: '5px' }}
         >
           {[0, 1, 2].map(i => (
             <span
               key={i}
               style={{
                 display: 'block',
-                width: '22px',
+                width: '24px',
                 height: '1.5px',
                 background: '#ffffff',
                 transition: 'transform 0.2s, opacity 0.2s',
@@ -136,15 +129,8 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
-        <div
-          style={{
-            background: '#071E3D',
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            padding: '1.5rem 2rem 2rem',
-          }}
-        >
+        <div style={{ background: '#071E3D', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '1.5rem 2rem 2rem' }}>
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
@@ -179,7 +165,7 @@ export function Navbar() {
               textDecoration: 'none',
             }}
           >
-            Get In Touch
+            {settings.navCtaLabel || 'Get In Touch'}
           </Link>
         </div>
       )}

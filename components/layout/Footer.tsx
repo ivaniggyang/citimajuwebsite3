@@ -3,21 +3,37 @@
 import Link from 'next/link'
 import { Logo } from '@/components/ui/Logo'
 
-const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/services', label: 'Services' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/contact', label: 'Contact' },
-]
+interface FooterSettings {
+  tagline?: string
+  phone?: string
+  phoneDial?: string
+  whatsapp?: string
+  email?: string
+  navAbout?: string
+  navServices?: string
+  navProjects?: string
+  navContact?: string
+  footerCredentialsLine?: string
+  footerNavHeading?: string
+  footerContactHeading?: string
+  footerCopyrightSuffix?: string
+  footerEntitiesLine?: string
+}
 
-export function Footer() {
+export function Footer({ settings }: { settings: FooterSettings }) {
   const year = new Date().getFullYear()
+  const navLinks = [
+    { href: '/about', label: settings.navAbout || 'About' },
+    { href: '/services', label: settings.navServices || 'Services' },
+    { href: '/projects', label: settings.navProjects || 'Projects' },
+    { href: '/contact', label: settings.navContact || 'Contact' },
+  ]
 
   return (
-    <footer style={{ background: '#071E3D', color: '#ffffff', paddingTop: '4rem' }}>
+    <footer style={{ background: '#071E3D', color: '#ffffff', paddingTop: '5rem' }}>
       <div
         style={{
-          maxWidth: '1200px',
+          maxWidth: '1280px',
           margin: '0 auto',
           padding: '0 2rem',
           display: 'grid',
@@ -26,62 +42,26 @@ export function Footer() {
           paddingBottom: '3rem',
         }}
       >
-        {/* Brand */}
         <div>
           <Logo variant="white" size="md" />
-          <p
-            style={{
-              marginTop: '1.5rem',
-              fontFamily: "'Sora', sans-serif",
-              fontWeight: 300,
-              fontSize: '11px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#C8921A',
-            }}
-          >
-            Trusted. Certified. Delivered.
+          <p style={{ marginTop: '1.75rem', fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A' }}>
+            {settings.tagline || 'Trusted. Certified. Delivered.'}
           </p>
-          <p
-            style={{
-              marginTop: '1rem',
-              fontFamily: "'Noto Sans', sans-serif",
-              fontSize: '13px',
-              lineHeight: 1.7,
-              color: 'rgba(255,255,255,0.55)',
-            }}
-          >
-            CIDB Grade G7<br />Air Selangor Approved Contractor
+          <p style={{ marginTop: '1rem', fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', lineHeight: 1.7, color: 'rgba(255,255,255,0.55)', whiteSpace: 'pre-line' }}>
+            {settings.footerCredentialsLine || 'CIDB Grade G7\nAir Selangor Approved Contractor'}
           </p>
         </div>
 
-        {/* Navigation */}
         <div>
-          <p
-            style={{
-              fontFamily: "'Sora', sans-serif",
-              fontWeight: 300,
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#C8921A',
-              marginBottom: '1rem',
-            }}
-          >
-            Navigation
+          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '1rem' }}>
+            {settings.footerNavHeading || 'Navigation'}
           </p>
           <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                style={{
-                  fontFamily: "'Noto Sans', sans-serif",
-                  fontSize: '14px',
-                  color: 'rgba(255,255,255,0.7)',
-                  textDecoration: 'none',
-                  transition: 'color 0.2s',
-                }}
+                style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
                 onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
               >
@@ -91,86 +71,36 @@ export function Footer() {
           </nav>
         </div>
 
-        {/* Contact */}
         <div>
-          <p
-            style={{
-              fontFamily: "'Sora', sans-serif",
-              fontWeight: 300,
-              fontSize: '10px',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#C8921A',
-              marginBottom: '1rem',
-            }}
-          >
-            Contact
+          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '1rem' }}>
+            {settings.footerContactHeading || 'Contact'}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            <a
-              href="mailto:inquiry@citimaju.com"
-              style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}
-            >
-              inquiry@citimaju.com
-            </a>
-            <a
-              href="tel:+60127836562"
-              style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}
-            >
-              +6012-783 6562
-            </a>
-            <a
-              href="https://wa.me/60127836562"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                fontFamily: "'Sora', sans-serif",
-                fontWeight: 500,
-                fontSize: '13px',
-                color: '#C8921A',
-                textDecoration: 'none',
-              }}
-            >
-              <WhatsAppIcon /> WhatsApp
-            </a>
+            {settings.email && (
+              <a href={`mailto:${settings.email}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
+                {settings.email}
+              </a>
+            )}
+            {settings.phone && (
+              <a href={`tel:${settings.phoneDial || settings.phone.replace(/[^0-9+]/g, '')}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
+                {settings.phone}
+              </a>
+            )}
+            {settings.whatsapp && (
+              <a href={`https://wa.me/${settings.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Sora', sans-serif", fontWeight: 500, fontSize: '13px', color: '#C8921A', textDecoration: 'none' }}>
+                <WhatsAppIcon /> WhatsApp
+              </a>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div
-        style={{
-          borderTop: '1px solid rgba(255,255,255,0.08)',
-          padding: '1.25rem 2rem',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "'Noto Sans', sans-serif",
-            fontSize: '12px',
-            color: 'rgba(255,255,255,0.35)',
-          }}
-        >
-          © {year} Citi Maju Group. All rights reserved.
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', padding: '1.25rem 2rem', maxWidth: '1280px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
+        <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
+          © {year} Citi Maju Group. {settings.footerCopyrightSuffix || 'All rights reserved.'}
         </p>
-        <p
-          style={{
-            fontFamily: "'Noto Sans', sans-serif",
-            fontSize: '12px',
-            color: 'rgba(255,255,255,0.25)',
-          }}
-        >
-          Citi Maju Engineering Sdn Bhd &amp; Citi Maju Construction Sdn Bhd
+        <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
+          {settings.footerEntitiesLine || 'Citi Maju Engineering Sdn Bhd & Citi Maju Construction Sdn Bhd'}
         </p>
       </div>
     </footer>

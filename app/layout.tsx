@@ -3,7 +3,10 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { getSiteSettings } from '@/sanity/lib/fetch'
 import './globals.css'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: {
@@ -21,8 +24,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const locale = await getLocale()
-  const messages = await getMessages()
+  const [locale, messages, settings] = await Promise.all([
+    getLocale(),
+    getMessages(),
+    getSiteSettings(),
+  ])
 
   return (
     <html lang={locale}>
@@ -36,9 +42,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar />
+          <Navbar settings={settings} />
           <main style={{ minHeight: '100vh' }}>{children}</main>
-          <Footer />
+          <Footer settings={settings} />
         </NextIntlClientProvider>
       </body>
     </html>

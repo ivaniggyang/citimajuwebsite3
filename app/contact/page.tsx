@@ -1,111 +1,104 @@
 import type { Metadata } from 'next'
 import { PageHero } from '@/components/ui/PageHero'
 import { ContactForm } from './ContactForm'
+import { getContactPage, getSiteSettings, s } from '@/sanity/lib/fetch'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Get in touch with Citi Maju Group for project inquiries, tender discussions, and general questions.',
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const [page, settings] = await Promise.all([getContactPage(), getSiteSettings()])
+
+  const phone = s(settings.phone, '+6012-783 6562')
+  const phoneDial = s(settings.phoneDial, phone.replace(/[^0-9+]/g, ''))
+  const whatsapp = s(settings.whatsapp, '60127836562')
+  const email = s(settings.email, 'inquiry@citimaju.com')
+
   return (
     <>
       <PageHero
-        eyebrow="Reach Us"
-        heading="Get In Touch"
-        sub="For project inquiries, tender submissions, or general questions — we are happy to discuss scope and feasibility."
+        eyebrow={s(page.heroEyebrow, 'Reach Us')}
+        heading={s(page.heroHeading, 'Get In Touch')}
+        sub={s(page.heroSub, 'For project inquiries, tender submissions, or general questions — we are happy to discuss scope and feasibility.')}
       />
 
-      <section style={{ padding: '6rem 0', background: '#ffffff' }}>
-        <div
-          style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '0 2rem',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '5rem',
-            alignItems: 'start',
-          }}
-        >
-          {/* Contact info */}
+      <section style={{ padding: '7rem 0', background: '#ffffff' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem', alignItems: 'start' }}>
           <div>
             <div style={{ width: '3rem', height: '1.5px', background: '#C8921A', marginBottom: '2.5rem' }} />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-              {/* WhatsApp */}
               <div>
                 <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  WhatsApp
+                  {s(page.whatsappLabel, 'WhatsApp')}
                 </p>
-                <a
-                  href="https://wa.me/60127836562"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    fontFamily: "'Sora', sans-serif",
-                    fontWeight: 600,
-                    fontSize: '15px',
-                    color: '#0D1B2E',
-                    textDecoration: 'none',
-                  }}
-                >
+                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '15px', color: '#0D1B2E', textDecoration: 'none' }}>
                   <WhatsAppIcon />
-                  +6012-783 6562
+                  {phone}
                 </a>
-                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', color: '#6B849C', marginTop: '0.35rem' }}>
-                  Tap to open a WhatsApp conversation directly.
+                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', color: '#6B849C', marginTop: '0.4rem' }}>
+                  {s(page.whatsappNote, 'Tap to open a WhatsApp conversation directly.')}
                 </p>
               </div>
 
-              {/* Phone */}
               <div>
                 <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  Phone
+                  {s(page.phoneLabel, 'Phone')}
                 </p>
-                <a href="tel:+60127836562" style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
-                  +6012-783 6562
+                <a href={`tel:${phoneDial}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
+                  {phone}
                 </a>
               </div>
 
-              {/* Email */}
               <div>
                 <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  Email
+                  {s(page.emailLabel, 'Email')}
                 </p>
-                <a href="mailto:inquiry@citimaju.com" style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
-                  inquiry@citimaju.com
+                <a href={`mailto:${email}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
+                  {email}
                 </a>
               </div>
 
-              {/* Office */}
               <div>
                 <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  Office
+                  {s(page.officeLabel, 'Office')}
                 </p>
-                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
-                  Klang Valley, Selangor<br />
-                  Malaysia
+                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068', whiteSpace: 'pre-line' }}>
+                  {s(page.officeAddress, 'Klang Valley, Selangor\nMalaysia')}
                 </p>
               </div>
             </div>
 
-            {/* Credentials note */}
-            <div style={{ marginTop: '3rem', padding: '1.5rem', background: '#F5F2EC', borderLeft: '3px solid #C8921A' }}>
+            <div style={{ marginTop: '3rem', padding: '1.75rem', background: '#F5F2EC', borderLeft: '3px solid #C8921A' }}>
               <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#0D1B2E', marginBottom: '0.5rem' }}>
-                CIDB Grade G7 · Air Selangor Approved
+                {s(page.noteHeading, 'CIDB Grade G7 · Air Selangor Approved')}
               </p>
               <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', lineHeight: 1.7, color: '#3A5068' }}>
-                We handle projects of any scale. For tender submissions, please include scope, location, and timeline in your inquiry.
+                {s(page.noteText, 'We handle projects of any scale. For tender submissions, please include scope, location, and timeline in your inquiry.')}
               </p>
             </div>
           </div>
 
-          {/* Form */}
-          <ContactForm />
+          <ContactForm
+            labels={{
+              name: s(page.formNameLabel, 'Full Name'),
+              company: s(page.formCompanyLabel, 'Company'),
+              email: s(page.formEmailLabel, 'Email Address'),
+              phone: s(page.formPhoneLabel, 'Phone Number'),
+              subject: s(page.formSubjectLabel, 'Subject'),
+              message: s(page.formMessageLabel, 'Message'),
+              submit: s(page.formSubmitLabel, 'Send Inquiry'),
+              successHeading: s(page.formSuccessHeading, 'Thank you.'),
+              successText: s(page.formSuccessText, 'Your inquiry has been received. We will be in touch shortly.'),
+              messagePlaceholder: s(page.formMessagePlaceholder, 'Please describe your project scope, location, and timeline.'),
+              subjectPlaceholder: s(page.formSubjectPlaceholder, 'e.g. Water reticulation project inquiry'),
+            }}
+            inquiryEmail={email}
+          />
         </div>
       </section>
     </>

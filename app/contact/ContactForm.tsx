@@ -12,6 +12,25 @@ interface FormData {
   message: string
 }
 
+interface FormLabels {
+  name: string
+  company: string
+  email: string
+  phone: string
+  subject: string
+  message: string
+  submit: string
+  successHeading: string
+  successText: string
+  messagePlaceholder: string
+  subjectPlaceholder: string
+}
+
+interface ContactFormProps {
+  labels: FormLabels
+  inquiryEmail: string
+}
+
 const inputStyle: React.CSSProperties = {
   width: '100%',
   fontFamily: "'Noto Sans', sans-serif",
@@ -36,9 +55,8 @@ const labelStyle: React.CSSProperties = {
   marginBottom: '0.4rem',
 }
 
-export function ContactForm() {
+export function ContactForm({ labels, inquiryEmail }: ContactFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>()
 
   const onSubmit = async (data: FormData) => {
@@ -62,19 +80,12 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div
-        style={{
-          padding: '3rem',
-          background: '#F5F2EC',
-          borderTop: '3px solid #C8921A',
-          textAlign: 'center',
-        }}
-      >
+      <div style={{ padding: '3rem', background: '#F5F2EC', borderTop: '3px solid #C8921A', textAlign: 'center' }}>
         <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: '1.75rem', color: '#0D1B2E', marginBottom: '0.75rem' }}>
-          Thank you.
+          {labels.successHeading}
         </p>
         <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', lineHeight: 1.75, color: '#3A5068' }}>
-          Your inquiry has been received. We will be in touch shortly.
+          {labels.successText}
         </p>
       </div>
     )
@@ -84,65 +95,39 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
         <div>
-          <label style={labelStyle} htmlFor="name">Full Name *</label>
-          <input
-            id="name"
-            style={{ ...inputStyle, borderColor: errors.name ? '#c0392b' : 'transparent' }}
-            placeholder="Your name"
-            {...register('name', { required: true })}
-          />
+          <label style={labelStyle} htmlFor="name">{labels.name} *</label>
+          <input id="name" style={{ ...inputStyle, borderColor: errors.name ? '#c0392b' : 'transparent' }} placeholder={labels.name} {...register('name', { required: true })} />
         </div>
         <div>
-          <label style={labelStyle} htmlFor="company">Company</label>
-          <input id="company" style={inputStyle} placeholder="Company name" {...register('company')} />
+          <label style={labelStyle} htmlFor="company">{labels.company}</label>
+          <input id="company" style={inputStyle} placeholder={labels.company} {...register('company')} />
         </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
         <div>
-          <label style={labelStyle} htmlFor="email">Email Address *</label>
-          <input
-            id="email"
-            type="email"
-            style={{ ...inputStyle, borderColor: errors.email ? '#c0392b' : 'transparent' }}
-            placeholder="you@company.com"
-            {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })}
-          />
+          <label style={labelStyle} htmlFor="email">{labels.email} *</label>
+          <input id="email" type="email" style={{ ...inputStyle, borderColor: errors.email ? '#c0392b' : 'transparent' }} placeholder="you@company.com" {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })} />
         </div>
         <div>
-          <label style={labelStyle} htmlFor="phone">Phone Number</label>
+          <label style={labelStyle} htmlFor="phone">{labels.phone}</label>
           <input id="phone" type="tel" style={inputStyle} placeholder="+60 12-XXX XXXX" {...register('phone')} />
         </div>
       </div>
 
       <div style={{ marginBottom: '1.25rem' }}>
-        <label style={labelStyle} htmlFor="subject">Subject *</label>
-        <input
-          id="subject"
-          style={{ ...inputStyle, borderColor: errors.subject ? '#c0392b' : 'transparent' }}
-          placeholder="e.g. Water reticulation project inquiry"
-          {...register('subject', { required: true })}
-        />
+        <label style={labelStyle} htmlFor="subject">{labels.subject} *</label>
+        <input id="subject" style={{ ...inputStyle, borderColor: errors.subject ? '#c0392b' : 'transparent' }} placeholder={labels.subjectPlaceholder} {...register('subject', { required: true })} />
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
-        <label style={labelStyle} htmlFor="message">Message *</label>
-        <textarea
-          id="message"
-          rows={6}
-          style={{
-            ...inputStyle,
-            resize: 'vertical',
-            borderColor: errors.message ? '#c0392b' : 'transparent',
-          }}
-          placeholder="Please describe your project scope, location, and timeline."
-          {...register('message', { required: true, minLength: 20 })}
-        />
+        <label style={labelStyle} htmlFor="message">{labels.message} *</label>
+        <textarea id="message" rows={6} style={{ ...inputStyle, resize: 'vertical', borderColor: errors.message ? '#c0392b' : 'transparent' }} placeholder={labels.messagePlaceholder} {...register('message', { required: true, minLength: 20 })} />
       </div>
 
       {status === 'error' && (
         <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', color: '#c0392b', marginBottom: '1.25rem' }}>
-          Something went wrong. Please try again or contact us directly at inquiry@citimaju.com.
+          Something went wrong. Please try again or contact us directly at {inquiryEmail}.
         </p>
       )}
 
@@ -163,7 +148,7 @@ export function ContactForm() {
           width: '100%',
         }}
       >
-        {status === 'submitting' ? 'Sending…' : 'Send Inquiry'}
+        {status === 'submitting' ? 'Sending…' : labels.submit}
       </button>
     </form>
   )

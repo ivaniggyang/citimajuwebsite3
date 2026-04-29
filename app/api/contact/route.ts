@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { getSiteSettings } from '@/sanity/lib/fetch'
 
 export async function POST(req: NextRequest) {
   const { name, company, email, phone, subject, message } = await req.json()
@@ -7,6 +8,9 @@ export async function POST(req: NextRequest) {
   if (!name || !email || !subject || !message) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
+
+  const settings = await getSiteSettings()
+  const toAddress = settings.email || 'inquiry@citimaju.com'
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -44,7 +48,7 @@ export async function POST(req: NextRequest) {
   try {
     await transporter.sendMail({
       from: `"CMG Website" <${process.env.SMTP_USER}>`,
-      to: 'inquiry@citimaju.com',
+      to: toAddress,
       replyTo: email,
       subject: `[CMG Inquiry] ${subject}`,
       html,

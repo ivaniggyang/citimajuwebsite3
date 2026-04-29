@@ -46,10 +46,17 @@ const PLACEHOLDER_PROJECTS: Project[] = [
   { _id: '8', title: 'Hot Tap Connection — 400mm DI Main, Petaling Jaya', slug: { current: '#' }, category: 'hot-tapping', location: 'Petaling Jaya, Selangor', completionYear: 2022 },
 ]
 
-export function ProjectsGrid({ projects }: { projects: Project[] }) {
+interface ProjectsGridProps {
+  projects: Project[]
+  filterAllLabel: string
+  noProjectsText: string
+}
+
+export function ProjectsGrid({ projects, filterAllLabel, noProjectsText }: ProjectsGridProps) {
   const [active, setActive] = useState('all')
   const displayProjects = projects.length > 0 ? projects : PLACEHOLDER_PROJECTS
   const filtered = active === 'all' ? displayProjects : displayProjects.filter(p => p.category === active)
+  const filtersWithLabel = [{ value: 'all', label: filterAllLabel }, ...filters.slice(1)]
 
   return (
     <section style={{ padding: '4rem 0 6rem', background: '#ffffff' }}>
@@ -57,7 +64,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
 
         {/* Filters */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '3rem' }}>
-          {filters.map(f => (
+          {filtersWithLabel.map(f => (
             <button
               key={f.value}
               onClick={() => setActive(f.value)}
@@ -87,7 +94,7 @@ export function ProjectsGrid({ projects }: { projects: Project[] }) {
         {/* Grid */}
         {filtered.length === 0 ? (
           <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#6B849C', padding: '3rem 0' }}>
-            No projects found.
+            {noProjectsText}
           </p>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5px', background: 'rgba(13,27,46,0.08)' }}>
