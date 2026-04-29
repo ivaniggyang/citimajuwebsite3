@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 97 111" role="img" aria-label="Citi Maju CM Mark">
+  <title>Citi Maju — CM Mark (Blue)</title>
+  <text
+    x="48.5"
+    y="74"
+    font-family="'Cormorant Garamond', 'Garamond', 'EB Garamond', serif"
+    font-size="60"
+    font-weight="600"
+    letter-spacing="-1"
+    fill="#1B4F8A"
+    text-anchor="middle"
+  >CM</text>
+  <line x1="18.5" y1="97" x2="78.5" y2="97" stroke="#C8921A" stroke-width="1.5" stroke-linecap="square"/>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" font-family="Arial, sans-serif">
+  <title>Citi Maju Colour Palette</title>
+
+  <!-- Title -->
+  <text x="40" y="40" font-size="18" font-weight="bold" fill="#071E3D">Citi Maju Group — Colour Palette</text>
+  <line x1="40" y1="50" x2="760" y2="50" stroke="#C8921A" stroke-width="1.5"/>
+
+  <!-- Row 1: Primary Blues -->
+  <text x="40" y="80" font-size="11" fill="#6B849C" letter-spacing="1">PRIMARY</text>
+
+  <!-- Deep Navy -->
+  <rect x="40" y="90" width="100" height="80" fill="#071E3D" rx="4"/>
+  <text x="90" y="185" font-size="10" fill="#071E3D" text-anchor="middle">Deep Navy</text>
+  <text x="90" y="198" font-size="9" fill="#6B849C" text-anchor="middle">#071E3D</text>
+
+  <!-- Brand Blue -->
+  <rect x="160" y="90" width="100" height="80" fill="#1B4F8A" rx="4"/>
+  <text x="210" y="185" font-size="10" fill="#071E3D" text-anchor="middle">Brand Blue</text>
+  <text x="210" y="198" font-size="9" fill="#6B849C" text-anchor="middle">#1B4F8A</text>
+
+  <!-- Blue Mid -->
+  <rect x="280" y="90" width="100" height="80" fill="#0D3362" rx="4"/>
+  <text x="330" y="185" font-size="10" fill="#071E3D" text-anchor="middle">Blue Mid</text>
+  <text x="330" y="198" font-size="9" fill="#6B849C" text-anchor="middle">#0D3362</text>
+
+  <!-- Blue Light -->
+  <rect x="400" y="90" width="100" height="80" fill="#2E6BB5" rx="4"/>
+  <text x="450" y="185" font-size="10" fill="#071E3D" text-anchor="middle">Blue Light</text>
+  <text x="450" y="198" font-size="9" fill="#6B849C" text-anchor="middle">#2E6BB5</text>
+
+  <!-- Blue Pale -->
+  <rect x="520" y="90" width="100" height="80" fill="#E8F1FB" rx="4" stroke="#D0DCF0" stroke-width="1"/>
+  <text x="570" y="185" font-size="10" fill="#071E3D" text-anchor="middle">Blue Pale</text>
+  <text x="570" y="198" font-size="9" fill="#6B849C" text-anchor="middle">#E8F1FB</text>
+
+  <!-- Row 2: Gold Accent -->
+  <text x="40" y="230" font-size="11" fill="#6B849C" letter-spacing="1">GOLD ACCENT</text>
+
+  <!-- Refined Gold -->
+  <rect x="40" y="240" width="100" height="80" fill="#C8921A" rx="4"/>
+  <text x="90" y="335" font-size="10" fill="#071E3D" text-anchor="middle">Refined Gold ★</text>
+  <text x="90" y="348" font-size="9" fill="#6B849C" text-anchor="middle">#C8921A</text>
+
+  <!-- Gold Light -->
+  <rect x="160" y="240" width="100" height="80" fill="#DBA830" rx="4"/>
+  <text x="210" y="335" font-size="10" fill="#071E3D" text-anchor="middle">Gold Light</text>
+  <text x="210" y="348" font-size="9" fill="#6B849C" text-anchor="middle">#DBA830</text>
+
+  <!-- Gold Dark -->
+  <rect x="280" y="240" width="100" height="80" fill="#A07010" rx="4"/>
+  <text x="330" y="335" font-size="10" fill="#071E3D" text-anchor="middle">Gold Dark</text>
+  <text x="330" y="348" font-size="9" fill="#6B849C" text-anchor="middle">#A07010</text>
+
+  <!-- Row 3: Backgrounds and Text -->
+  <text x="40" y="380" font-size="11" fill="#6B849C" letter-spacing="1">BACKGROUNDS &amp; TEXT</text>
+
+  <!-- Warm Paper -->
+  <rect x="40" y="390" width="100" height="80" fill="#F5F2EC" rx="4" stroke="#E0DDD5" stroke-width="1"/>
+  <text x="90" y="485" font-size="10" fill="#071E3D" text-anchor="middle">Warm Paper</text>
+  <text x="90" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#F5F2EC</text>
+
+  <!-- Cream -->
+  <rect x="160" y="390" width="100" height="80" fill="#F7F4EF" rx="4" stroke="#E0DDD5" stroke-width="1"/>
+  <text x="210" y="485" font-size="10" fill="#071E3D" text-anchor="middle">Cream</text>
+  <text x="210" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#F7F4EF</text>
+
+  <!-- Text Dark -->
+  <rect x="280" y="390" width="100" height="80" fill="#0D1B2E" rx="4"/>
+  <text x="330" y="485" font-size="10" fill="#071E3D" text-anchor="middle">Text Dark</text>
+  <text x="330" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#0D1B2E</text>
+
+  <!-- Text Mid -->
+  <rect x="400" y="390" width="100" height="80" fill="#3A5068" rx="4"/>
+  <text x="450" y="485" font-size="10" fill="#071E3D" text-anchor="middle">Text Mid</text>
+  <text x="450" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#3A5068</text>
+
+  <!-- Text Light -->
+  <rect x="520" y="390" width="100" height="80" fill="#6B849C" rx="4"/>
+  <text x="570" y="485" font-size="10" fill="#071E3D" text-anchor="middle">Text Light</text>
+  <text x="570" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#6B849C</text>
+
+  <!-- White -->
+  <rect x="640" y="390" width="100" height="80" fill="#FFFFFF" rx="4" stroke="#E0DDD5" stroke-width="1"/>
+  <text x="690" y="485" font-size="10" fill="#071E3D" text-anchor="middle">White</text>
+  <text x="690" y="498" font-size="9" fill="#6B849C" text-anchor="middle">#FFFFFF</text>
+
+  <!-- Footer note -->
+  <text x="40" y="535" font-size="9" fill="#6B849C">★ Primary gold — use #C8921A only. Never use #E8A020 (retired amber).</text>
+</svg>
