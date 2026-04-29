@@ -1,0 +1,76 @@
+@import "tailwindcss";
+/* Google Fonts loaded via <link> in layout.tsx for performance — do not import here */
+
+@theme inline {
+  /* Brand Colours */
+  --color-navy:         #071E3D;
+  --color-brand-blue:   #1B4F8A;
+  --color-blue-mid:     #0D3362;
+  --color-blue-light:   #2E6BB5;
+  --color-blue-pale:    #E8F1FB;
+
+  --color-gold:         #C8921A;
+  --color-gold-light:   #DBA830;
+  --color-gold-dark:    #A07010;
+
+  --color-warm-paper:   #F5F2EC;
+  --color-cream:        #F7F4EF;
+
+  --color-text-dark:    #0D1B2E;
+  --color-text-mid:     #3A5068;
+  --color-text-light:   #6B849C;
+
+  /* Fonts */
+  --font-display:  'Cormorant Garamond', Garamond, 'EB Garamond', serif;
+  --font-ui:       'Sora', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+  --font-body:     'Noto Sans', Calibri, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #0D1B2E;
+  font-family: 'Noto Sans', Calibri, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2 {
+  font-family: 'Cormorant Garamond', Garamond, serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+h3, h4, h5, h6 {
+  font-family: 'Sora', sans-serif;
+  line-height: 1.3;
+}
+
+/* Eyebrow / label utility */
+.eyebrow {
+  font-family: 'Sora', sans-serif;
+  font-weight: 300;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1B4F8A;
+}
+
+/* Gold rule utility */
+.gold-rule {
+  display: block;
+  width: 3rem;
+  height: 1.5px;
+  background: #C8921A;
+}

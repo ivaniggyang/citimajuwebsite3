@@ -1,0 +1,73 @@
+{
+  "nav": {
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact",
+    "cta": "Get In Touch"
+  },
+  "home": {
+    "heroHeading": "Infrastructure Built to Last",
+    "heroSub": "Citi Maju Group delivers large-scale water reticulation, civil, structural, and renovation works across Klang Valley. CIDB G7 certified. Air Selangor approved.",
+    "heroCta": "View Our Projects",
+    "heroCtaSecondary": "Contact Us",
+    "statsProjects": "Projects Completed",
+    "statsYears": "Years in Operation",
+    "statsGrade": "CIDB Grade",
+    "statsApproval": "Air Selangor Approved",
+    "servicesHeading": "What We Do",
+    "servicesEyebrow": "Our Services",
+    "projectsHeading": "Selected Projects",
+    "projectsEyebrow": "Our Work",
+    "projectsViewAll": "View All Projects",
+    "aboutEyebrow": "About CMG",
+    "aboutHeading": "Trusted. Certified. Delivered.",
+    "aboutText": "Citi Maju Group is a CIDB G7 certified contractor with a track record of large-scale infrastructure projects across Klang Valley. We deliver water reticulation, civil and structural works, and full renovation services — with the credentials and capacity to handle projects of any scale.",
+    "aboutCta": "Learn More",
+    "aboutCtaSecondary": "Get In Touch"
+  },
+  "about": {
+    "eyebrow": "About CMG",
+    "heading": "Who We Are",
+    "entityEyebrow": "Our Entities",
+    "entityHeading": "One Group, Two Entities",
+    "engineeringName": "Citi Maju Engineering Sdn Bhd",
+    "constructionName": "Citi Maju Construction Sdn Bhd",
+    "credentialsEyebrow": "Credentials",
+    "credentialsHeading": "Our Certifications"
+  },
+  "services": {
+    "eyebrow": "What We Do",
+    "heading": "Our Services",
+    "sub": "From water mains to structural steel, we cover the full scope of infrastructure and building works."
+  },
+  "projects": {
+    "eyebrow": "Our Work",
+    "heading": "Project Portfolio",
+    "filterAll": "All Projects",
+    "noProjects": "No projects found."
+  },
+  "contact": {
+    "eyebrow": "Reach Us",
+    "heading": "Get In Touch",
+    "sub": "For project inquiries, tender submissions, or general questions — we are happy to discuss scope and feasibility.",
+    "formName": "Full Name",
+    "formCompany": "Company",
+    "formEmail": "Email Address",
+    "formPhone": "Phone Number",
+    "formSubject": "Subject",
+    "formMessage": "Message",
+    "formSubmit": "Send Inquiry",
+    "formSuccess": "Thank you. Your inquiry has been received. We will be in touch shortly.",
+    "formError": "Something went wrong. Please try again or contact us directly.",
+    "whatsappLabel": "Chat on WhatsApp",
+    "emailLabel": "Email Us",
+    "phoneLabel": "Call Us",
+    "addressLabel": "Office"
+  },
+  "footer": {
+    "tagline": "Trusted. Certified. Delivered.",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy"
+  }
+}
