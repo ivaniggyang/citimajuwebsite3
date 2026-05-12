@@ -18,6 +18,11 @@ export default async function ContactPage() {
   const whatsapp = s(settings.whatsapp, '60127836562')
   const email = s(settings.email, 'inquiry@citimaju.com')
 
+  const showPhone = settings.showPhone !== false
+  const showWhatsapp = settings.showWhatsapp !== false
+  const showEmail = settings.showEmail !== false
+  const showOfficeAddress = settings.showOfficeAddress === true
+
   return (
     <>
       <PageHero
@@ -32,45 +37,53 @@ export default async function ContactPage() {
             <div style={{ width: '3rem', height: '1.5px', background: '#C8921A', marginBottom: '2.5rem' }} />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
-              <div>
-                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  {s(page.whatsappLabel, 'WhatsApp')}
-                </p>
-                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '15px', color: '#0D1B2E', textDecoration: 'none' }}>
-                  <WhatsAppIcon />
-                  {phone}
-                </a>
-                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', color: '#6B849C', marginTop: '0.4rem' }}>
-                  {s(page.whatsappNote, 'Tap to open a WhatsApp conversation directly.')}
-                </p>
-              </div>
+              {showWhatsapp && (
+                <div>
+                  <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
+                    {s(page.whatsappLabel, 'WhatsApp')}
+                  </p>
+                  <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '15px', color: '#0D1B2E', textDecoration: 'none' }}>
+                    <WhatsAppIcon />
+                    {phone}
+                  </a>
+                  <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '13px', color: '#6B849C', marginTop: '0.4rem' }}>
+                    {s(page.whatsappNote, 'Tap to open a WhatsApp conversation directly.')}
+                  </p>
+                </div>
+              )}
 
-              <div>
-                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  {s(page.phoneLabel, 'Phone')}
-                </p>
-                <a href={`tel:${phoneDial}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
-                  {phone}
-                </a>
-              </div>
+              {showPhone && (
+                <div>
+                  <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
+                    {s(page.phoneLabel, 'Phone')}
+                  </p>
+                  <a href={`tel:${phoneDial}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
+                    {phone}
+                  </a>
+                </div>
+              )}
 
-              <div>
-                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  {s(page.emailLabel, 'Email')}
-                </p>
-                <a href={`mailto:${email}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
-                  {email}
-                </a>
-              </div>
+              {showEmail && (
+                <div>
+                  <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
+                    {s(page.emailLabel, 'Email')}
+                  </p>
+                  <a href={`mailto:${email}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#0D1B2E', textDecoration: 'none', fontWeight: 500 }}>
+                    {email}
+                  </a>
+                </div>
+              )}
 
-              <div>
-                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
-                  {s(page.officeLabel, 'Office')}
-                </p>
-                <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068', whiteSpace: 'pre-line' }}>
-                  {s(page.officeAddress, 'Klang Valley, Selangor\nMalaysia')}
-                </p>
-              </div>
+              {showOfficeAddress && (
+                <div>
+                  <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.5rem' }}>
+                    {s(page.officeLabel, 'Office')}
+                  </p>
+                  <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068', whiteSpace: 'pre-line' }}>
+                    {s(page.officeAddress, 'Klang Valley, Selangor\nMalaysia')}
+                  </p>
+                </div>
+              )}
             </div>
 
             <div style={{ marginTop: '3rem', padding: '1.75rem', background: '#F5F2EC', borderLeft: '3px solid #C8921A' }}>
