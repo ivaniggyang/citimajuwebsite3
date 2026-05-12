@@ -53,7 +53,7 @@ export default async function ServicesPage() {
         sub={s(page.heroSub, 'From water mains to structural steel — we cover the full scope of infrastructure and building works.')}
       />
 
-      <section style={{ padding: '7rem 0', background: '#ffffff' }}>
+      <section style={{ padding: '9rem 0', background: '#ffffff' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
           {categoryGroups.map(({ id, label }) => {
             const group = displayServices.filter(srv => srv.category === id)
@@ -66,9 +66,9 @@ export default async function ServicesPage() {
                     {label}
                   </h2>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5px', background: 'rgba(13,27,46,0.08)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
                   {group.map(srv => (
-                    <div key={srv._id} style={{ background: '#ffffff', padding: '2.75rem' }}>
+                    <div key={srv._id} style={{ background: '#F7F4EF', padding: '2.75rem' }}>
                       <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '17px', letterSpacing: '0.01em', color: '#0D1B2E', marginBottom: '0.875rem', lineHeight: 1.3 }}>
                         {srv.title}
                       </h3>
@@ -84,7 +84,7 @@ export default async function ServicesPage() {
         </div>
       </section>
 
-      <section style={{ padding: '6rem 0', background: '#071E3D', textAlign: 'center' }}>
+      <section style={{ padding: '8rem 0', background: '#071E3D', textAlign: 'center' }}>
         <div style={{ maxWidth: '580px', margin: '0 auto', padding: '0 2rem' }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#ffffff', marginBottom: '1rem', lineHeight: 1.15 }}>
             {s(page.ctaHeading, 'Ready to discuss your project?')}

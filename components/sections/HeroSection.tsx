@@ -53,9 +53,9 @@ export function HeroSection({ eyebrow, heading, subtext, primaryCtaLabel, primar
         }}
       />
 
-      <div style={{ position: 'relative', maxWidth: '1280px', margin: '0 auto', padding: '9rem 2rem 6rem', width: '100%' }}>
+      <div style={{ position: 'relative', maxWidth: '1280px', margin: '0 auto', padding: '10rem 2rem 8rem', width: '100%' }}>
         {eyebrow && (
-          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '1.5rem' }}>
+          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '1.75rem' }}>
             {eyebrow}
           </p>
         )}
@@ -64,20 +64,20 @@ export function HeroSection({ eyebrow, heading, subtext, primaryCtaLabel, primar
           style={{
             fontFamily: "'Cormorant Garamond', Garamond, serif",
             fontWeight: 400,
-            fontSize: 'clamp(2.75rem, 6.5vw, 5.5rem)',
-            lineHeight: 1.05,
+            fontSize: 'clamp(3rem, 7.5vw, 6.5rem)',
+            lineHeight: 1.0,
             color: '#FFFFFF',
-            maxWidth: '900px',
-            marginBottom: '2rem',
+            maxWidth: '960px',
+            marginBottom: '2.5rem',
             letterSpacing: '-0.01em',
           }}
         >
           {heading}
         </h1>
 
-        <div style={{ width: '3rem', height: '1.5px', background: '#C8921A', marginBottom: '2rem' }} />
+        <div style={{ width: '3rem', height: '1.5px', background: '#C8921A', marginBottom: '2.5rem' }} />
 
-        <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '17px', lineHeight: 1.75, color: 'rgba(232,241,251,0.85)', maxWidth: '640px', marginBottom: '3rem' }}>
+        <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '17px', lineHeight: 1.8, color: 'rgba(232,241,251,0.8)', maxWidth: '580px', marginBottom: '3.5rem' }}>
           {subtext}
         </p>
 
@@ -105,13 +105,13 @@ export function HeroSection({ eyebrow, heading, subtext, primaryCtaLabel, primar
         </div>
 
         {validStats.length > 0 && (
-          <div style={{ marginTop: '5rem', display: 'flex', flexWrap: 'wrap', gap: '3rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '2rem' }}>
+          <div style={{ marginTop: '6rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '3rem', display: 'grid', gridTemplateColumns: `repeat(${validStats.length}, minmax(0, 1fr))`, gap: '2rem', maxWidth: '720px' }}>
             {validStats.map((stat, i) => (
               <div key={i}>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#ffffff', lineHeight: 1, marginBottom: '0.4rem' }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2rem, 4vw, 3.25rem)', color: '#ffffff', lineHeight: 1, marginBottom: '0.75rem', letterSpacing: '-0.01em' }}>
                   {stat.value}
                 </p>
-                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(232,241,251,0.55)' }}>
+                <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(200,146,26,0.75)' }}>
                   {stat.label}
                 </p>
               </div>

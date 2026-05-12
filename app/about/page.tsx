@@ -38,7 +38,7 @@ export default async function AboutPage() {
       <PageHero eyebrow={s(page.heroEyebrow, 'About Us')} heading={s(page.heroHeading, 'Who We Are')} />
 
       {/* Main about */}
-      <section style={{ padding: '7rem 0', background: '#ffffff' }}>
+      <section style={{ padding: '9rem 0', background: '#ffffff' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem', alignItems: 'start' }}>
           <div>
             <div style={{ width: '3rem', height: '1.5px', background: '#C8921A', marginBottom: '2rem' }} />
@@ -64,7 +64,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Entities */}
-      <section style={{ padding: '6rem 0', background: '#F7F4EF' }}>
+      <section style={{ padding: '8rem 0', background: '#F7F4EF' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
           <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#1B4F8A', marginBottom: '0.875rem' }}>
             {s(page.entitiesEyebrow, 'Our Entities')}
@@ -72,7 +72,7 @@ export default async function AboutPage() {
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#0D1B2E', marginBottom: '3rem', lineHeight: 1.15 }}>
             {s(page.entitiesHeading, 'One Group, Two Entities')}
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5px', background: 'rgba(13,27,46,0.08)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
             {entities.map((e, i) => (
               <div key={i} style={{ background: '#ffffff', padding: '2.75rem' }}>
                 <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.75rem' }}>
@@ -96,7 +96,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Credentials */}
-      <section style={{ padding: '6rem 0', background: '#071E3D' }}>
+      <section style={{ padding: '8rem 0', background: '#071E3D' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
           <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.875rem' }}>
             {s(page.credentialsEyebrow, 'Credentials')}
@@ -104,7 +104,7 @@ export default async function AboutPage() {
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#ffffff', marginBottom: '3rem', lineHeight: 1.15 }}>
             {s(page.credentialsHeading, 'Our Certifications')}
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5px', background: 'rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
             {credentials.map((c, i) => (
               <div key={i} style={{ background: '#071E3D', padding: '2.75rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
@@ -127,7 +127,7 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: '6rem 0', background: '#F5F2EC', textAlign: 'center' }}>
+      <section style={{ padding: '8rem 0', background: '#F5F2EC', textAlign: 'center' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0 2rem' }}>
           <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#0D1B2E', marginBottom: '1rem', lineHeight: 1.15 }}>
             {s(page.ctaHeading, 'Have a project in mind?')}

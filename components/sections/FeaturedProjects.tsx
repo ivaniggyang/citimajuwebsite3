@@ -33,14 +33,14 @@ export function FeaturedProjects({ eyebrow, heading, viewAllLabel, projects }: F
   const displayProjects = projects.length > 0 ? projects : PLACEHOLDER_PROJECTS
 
   return (
-    <section style={{ padding: '7rem 0', background: '#071E3D' }}>
+    <section style={{ padding: '9rem 0', background: '#071E3D' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '4rem' }}>
           <div>
             <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.875rem' }}>
               {eyebrow}
             </p>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2.25rem, 4.5vw, 3.5rem)', color: '#ffffff', lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2.25rem, 4.5vw, 3.75rem)', color: '#ffffff', lineHeight: 1.05 }}>
               {heading}
             </h2>
           </div>
@@ -51,40 +51,75 @@ export function FeaturedProjects({ eyebrow, heading, viewAllLabel, projects }: F
           )}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5px' }}>
-          {displayProjects.slice(0, 6).map((project, i) => (
-            <ProjectCard key={project._id} project={project} index={i} />
-          ))}
+        {/* Asymmetric grid: first project is large (2/3), remaining fill a right column and lower row */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gridTemplateRows: 'auto auto', gap: '2px' }}>
+          {/* Large featured card */}
+          <div style={{ gridRow: 'span 2' }}>
+            <ProjectCard project={displayProjects[0]} large />
+          </div>
+          {/* Two stacked cards on the right */}
+          <div>
+            <ProjectCard project={displayProjects[1] ?? displayProjects[0]} />
+          </div>
+          <div>
+            <ProjectCard project={displayProjects[2] ?? displayProjects[0]} />
+          </div>
         </div>
+
+        {/* Remaining projects in a 3-column row */}
+        {displayProjects.length > 3 && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px', marginTop: '2px' }}>
+            {displayProjects.slice(3, 6).map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
+          </div>
+        )}
       </div>
+
+      {viewAllLabel && (
+        <div style={{ maxWidth: '1280px', margin: '3.5rem auto 0', padding: '0 2rem', textAlign: 'right' }}>
+          <Link href="/projects" style={{ fontFamily: "'Sora', sans-serif", fontWeight: 500, fontSize: '13px', letterSpacing: '0.04em', color: 'rgba(255,255,255,0.65)', textDecoration: 'none', borderBottom: '1px solid rgba(200,146,26,0.5)', paddingBottom: '2px' }}>
+            {viewAllLabel}
+          </Link>
+        </div>
+      )}
     </section>
   )
 }
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({ project, large }: { project: Project; large?: boolean }) {
   return (
-    <Link href={`/projects/${project.slug?.current || '#'}`} style={{ display: 'block', textDecoration: 'none', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: index % 3 === 0 ? '#0D3362' : index % 3 === 1 ? '#1B4F8A' : '#0D1B2E', overflow: 'hidden' }}>
+    <Link
+      href={`/projects/${project.slug?.current || '#'}`}
+      style={{ display: 'block', textDecoration: 'none', position: 'relative', overflow: 'hidden', height: '100%' }}
+    >
+      <div style={{ position: 'relative', aspectRatio: large ? '16/10' : '4/3', background: '#0D3362', overflow: 'hidden', height: large ? undefined : '100%', minHeight: large ? undefined : '220px' }}>
         {project.coverImage ? (
-          <Image src={urlFor(project.coverImage).width(720).height(540).url()} alt={project.title} fill style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }} sizes="(max-width: 768px) 100vw, 33vw" />
+          <Image
+            src={urlFor(project.coverImage).width(large ? 1200 : 600).height(large ? 750 : 450).url()}
+            alt={project.title}
+            fill
+            style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
+            sizes={large ? '(max-width: 768px) 100vw, 67vw' : '(max-width: 768px) 100vw, 33vw'}
+          />
         ) : (
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.15 }}>
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.12 }}>
             <svg viewBox="0 0 97 111" height="60" width="52" aria-hidden="true">
               <text x="48.5" y="74" textAnchor="middle" fontFamily="'Cormorant Garamond', serif" fontSize="60" fontWeight="600" fill="#ffffff">CM</text>
               <line x1="18.5" y1="97" x2="78.5" y2="97" stroke="#C8921A" strokeWidth="1.5" />
             </svg>
           </div>
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,30,61,0.9) 0%, transparent 60%)' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1.75rem' }}>
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,30,61,0.92) 0%, rgba(7,30,61,0.3) 50%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: large ? '2.5rem' : '1.75rem' }}>
           <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.5rem' }}>
             {categoryLabels[project.category] || project.category}{project.completionYear ? ` · ${project.completionYear}` : ''}
           </p>
-          <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '16px', color: '#ffffff', lineHeight: 1.35 }}>
+          <h3 style={{ fontFamily: large ? "'Cormorant Garamond', serif" : "'Sora', sans-serif", fontWeight: large ? 400 : 600, fontSize: large ? 'clamp(1.5rem, 2.5vw, 2.25rem)' : '15px', color: '#ffffff', lineHeight: 1.25 }}>
             {project.title}
           </h3>
           {project.location && (
-            <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '12px', color: 'rgba(232,241,251,0.6)', marginTop: '0.35rem' }}>
+            <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '12px', color: 'rgba(232,241,251,0.55)', marginTop: '0.4rem' }}>
               {project.location}
             </p>
           )}
