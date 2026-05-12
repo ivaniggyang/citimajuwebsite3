@@ -25,7 +25,7 @@ export const CONTACT_PAGE_QUERY = groq`
 `
 
 export const FEATURED_PROJECTS_QUERY = groq`
-  *[_type == "project" && featured == true && published == true] | order(completionYear desc) [0...6] {
+  *[_type == "project" && published == true] | order(featured desc, completionYear desc) [0...6] {
     _id, title, slug, category, client, location, completionYear,
     coverImage, description
   }

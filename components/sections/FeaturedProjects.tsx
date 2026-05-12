@@ -30,7 +30,7 @@ const categoryLabels: Record<string, string> = {
 }
 
 export function FeaturedProjects({ eyebrow, heading, viewAllLabel, projects }: FeaturedProjectsProps) {
-  const displayProjects = projects.length > 0 ? projects : PLACEHOLDER_PROJECTS
+  if (projects.length === 0) return null
 
   return (
     <section style={{ padding: '9rem 0', background: '#071E3D' }}>
@@ -51,28 +51,36 @@ export function FeaturedProjects({ eyebrow, heading, viewAllLabel, projects }: F
           )}
         </div>
 
-        {/* Asymmetric grid: first project is large (2/3), remaining fill a right column and lower row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gridTemplateRows: 'auto auto', gap: '2px' }}>
-          {/* Large featured card */}
-          <div style={{ gridRow: 'span 2' }}>
-            <ProjectCard project={displayProjects[0]} large />
-          </div>
-          {/* Two stacked cards on the right */}
+        {projects.length === 1 ? (
           <div>
-            <ProjectCard project={displayProjects[1] ?? displayProjects[0]} />
+            <ProjectCard project={projects[0]} large />
           </div>
-          <div>
-            <ProjectCard project={displayProjects[2] ?? displayProjects[0]} />
-          </div>
-        </div>
+        ) : (
+          <>
+            {/* Asymmetric grid: first project is large (2/3), next two stacked on the right */}
+            <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gridTemplateRows: 'auto auto', gap: '2px' }}>
+              <div style={{ gridRow: 'span 2' }}>
+                <ProjectCard project={projects[0]} large />
+              </div>
+              <div>
+                <ProjectCard project={projects[1]} />
+              </div>
+              {projects[2] && (
+                <div>
+                  <ProjectCard project={projects[2]} />
+                </div>
+              )}
+            </div>
 
-        {/* Remaining projects in a 3-column row */}
-        {displayProjects.length > 3 && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px', marginTop: '2px' }}>
-            {displayProjects.slice(3, 6).map((project) => (
-              <ProjectCard key={project._id} project={project} />
-            ))}
-          </div>
+            {/* Remaining projects in a 3-column row */}
+            {projects.length > 3 && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2px', marginTop: '2px' }}>
+                {projects.slice(3, 6).map((project) => (
+                  <ProjectCard key={project._id} project={project} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -128,12 +136,3 @@ function ProjectCard({ project, large }: { project: Project; large?: boolean }) 
     </Link>
   )
 }
-
-const PLACEHOLDER_PROJECTS: Project[] = [
-  { _id: '1', title: 'Sg. Buloh Water Reticulation — Phase 3', slug: { current: '#' }, category: 'water-reticulation', location: 'Shah Alam, Selangor', completionYear: 2024 },
-  { _id: '2', title: 'Live Main Connection, Puchong Industrial', slug: { current: '#' }, category: 'hot-tapping', location: 'Puchong, Selangor', completionYear: 2024 },
-  { _id: '3', title: 'Structural Steel Canopy, Klang Valley Distribution Hub', slug: { current: '#' }, category: 'civil-structural', location: 'Klang, Selangor', completionYear: 2023 },
-  { _id: '4', title: 'Full Renovation, Damansara Office Tower', slug: { current: '#' }, category: 'renovation', location: 'Damansara, KL', completionYear: 2023 },
-  { _id: '5', title: 'Waterproofing & Facade Repair, Shah Alam Complex', slug: { current: '#' }, category: 'renovation', location: 'Shah Alam, Selangor', completionYear: 2023 },
-  { _id: '6', title: 'Reticulation Network Extension — Ara Damansara', slug: { current: '#' }, category: 'water-reticulation', location: 'Ara Damansara, Selangor', completionYear: 2022 },
-]

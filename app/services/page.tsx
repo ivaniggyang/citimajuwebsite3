@@ -19,17 +19,6 @@ interface Service {
   shortDescription: string
 }
 
-const PLACEHOLDER_SERVICES: Service[] = [
-  { _id: '1', title: 'Water Reticulation', category: 'water-utilities', shortDescription: 'Large-scale water main laying, service connections, and reticulation network works.' },
-  { _id: '2', title: 'Hot Tapping', category: 'water-utilities', shortDescription: 'Live main connections without service interruption.' },
-  { _id: '3', title: 'Pipeline Works', category: 'water-utilities', shortDescription: 'HDPE, DI, and uPVC pipelines including pipe bursting, sleeving, and trenchless methods.' },
-  { _id: '4', title: 'Civil & Structural Works', category: 'civil-structural', shortDescription: 'Earthworks, drainage, reinforced concrete structures, and full civil scope.' },
-  { _id: '5', title: 'Metal Structure Fabrication', category: 'civil-structural', shortDescription: 'Steel canopies, walkways, mezzanines, industrial frames, and other structural steelwork.' },
-  { _id: '6', title: 'Renovation & Refurbishment', category: 'renovation-finishing', shortDescription: 'Partition walls, ceilings, tiling, plastering, painting, and M&E coordination.' },
-  { _id: '7', title: 'Painting & Plastering', category: 'renovation-finishing', shortDescription: 'Internal and external finishes for commercial and residential buildings.' },
-  { _id: '8', title: 'Leak Repair & Waterproofing', category: 'renovation-finishing', shortDescription: 'Diagnosis and remediation of structural leaks and pipe repair works.' },
-]
-
 const categoryGroups = [
   { id: 'water-utilities', label: 'Water & Utilities' },
   { id: 'civil-structural', label: 'Civil & Structural' },
@@ -43,7 +32,7 @@ export default async function ServicesPage() {
     client.fetch(ALL_SERVICES_QUERY, {}, { next: { revalidate: 0 } }).catch(() => []) as Promise<Service[]>,
   ])
 
-  const displayServices = services.length > 0 ? services : PLACEHOLDER_SERVICES
+  const displayServices = services
 
   return (
     <>
@@ -55,32 +44,36 @@ export default async function ServicesPage() {
 
       <section style={{ padding: '9rem 0', background: '#ffffff' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
-          {categoryGroups.map(({ id, label }) => {
-            const group = displayServices.filter(srv => srv.category === id)
-            if (group.length === 0) return null
-            return (
-              <div key={id} style={{ marginBottom: '5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
-                  <div style={{ width: '3px', height: '2rem', background: '#C8921A', flexShrink: 0 }} />
-                  <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', color: '#0D1B2E', lineHeight: 1.15 }}>
-                    {label}
-                  </h2>
+          {displayServices.length === 0 ? (
+            <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', color: '#6B849C' }}>No services listed yet.</p>
+          ) : (
+            categoryGroups.map(({ id, label }) => {
+              const group = displayServices.filter(srv => srv.category === id)
+              if (group.length === 0) return null
+              return (
+                <div key={id} style={{ marginBottom: '5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', marginBottom: '2rem' }}>
+                    <div style={{ width: '3px', height: '2rem', background: '#C8921A', flexShrink: 0 }} />
+                    <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', color: '#0D1B2E', lineHeight: 1.15 }}>
+                      {label}
+                    </h2>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
+                    {group.map(srv => (
+                      <div key={srv._id} style={{ background: '#F7F4EF', padding: '2.75rem' }}>
+                        <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '17px', letterSpacing: '0.01em', color: '#0D1B2E', marginBottom: '0.875rem', lineHeight: 1.3 }}>
+                          {srv.title}
+                        </h3>
+                        <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
+                          {srv.shortDescription}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                  {group.map(srv => (
-                    <div key={srv._id} style={{ background: '#F7F4EF', padding: '2.75rem' }}>
-                      <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '17px', letterSpacing: '0.01em', color: '#0D1B2E', marginBottom: '0.875rem', lineHeight: 1.3 }}>
-                        {srv.title}
-                      </h3>
-                      <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
-                        {srv.shortDescription}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )
-          })}
+              )
+            })
+          )}
         </div>
       </section>
 

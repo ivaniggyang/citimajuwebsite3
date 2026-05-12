@@ -24,7 +24,8 @@ const categoryAccents: Record<string, string> = {
 }
 
 export function ServicesSection({ eyebrow, heading, viewAllLabel, services }: ServicesSectionProps) {
-  const displayServices = services.length > 0 ? services : PLACEHOLDER_SERVICES
+  if (services.length === 0) return null
+  const displayServices = services
 
   return (
     <section style={{ padding: '9rem 0', background: '#F7F4EF' }}>
@@ -68,12 +69,3 @@ export function ServicesSection({ eyebrow, heading, viewAllLabel, services }: Se
     </section>
   )
 }
-
-const PLACEHOLDER_SERVICES: Service[] = [
-  { _id: '1', title: 'Water Reticulation', category: 'water-utilities', shortDescription: 'Large-scale water main laying, service connections, and reticulation network works for municipal and developer projects across Klang Valley.' },
-  { _id: '2', title: 'Hot Tapping', category: 'water-utilities', shortDescription: 'Live main connections without service interruption. We carry out hot tapping on pressurised pipelines for Air Selangor and other utilities.' },
-  { _id: '3', title: 'Civil & Structural Works', category: 'civil-structural', shortDescription: 'From earthworks and drainage to structural steel erection and reinforced concrete frames. We handle the full civil and structural scope.' },
-  { _id: '4', title: 'Metal Structure Fabrication', category: 'civil-structural', shortDescription: 'Design and erection of steel structures including canopies, walkways, mezzanines, and industrial frameworks to specification.' },
-  { _id: '5', title: 'Renovation & Refurbishment', category: 'renovation-finishing', shortDescription: 'End-to-end renovation works including wall patching, plastering, painting, tiling, and full interior fit-outs for commercial and residential properties.' },
-  { _id: '6', title: 'Leak Repair & Waterproofing', category: 'renovation-finishing', shortDescription: 'Diagnosis and remediation of structural leaks, roof waterproofing, and pipe repair works. Minimal disruption, permanent fixes.' },
-]
