@@ -18,6 +18,9 @@ interface FooterSettings {
   footerContactHeading?: string
   footerCopyrightSuffix?: string
   footerEntitiesLine?: string
+  showPhone?: boolean
+  showWhatsapp?: boolean
+  showEmail?: boolean
 }
 
 export function Footer({ settings }: { settings: FooterSettings }) {
@@ -76,17 +79,17 @@ export function Footer({ settings }: { settings: FooterSettings }) {
             {settings.footerContactHeading || 'Contact'}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-            {settings.email && (
+            {settings.showEmail !== false && settings.email && (
               <a href={`mailto:${settings.email}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
                 {settings.email}
               </a>
             )}
-            {settings.phone && (
+            {settings.showPhone !== false && settings.phone && (
               <a href={`tel:${settings.phoneDial || settings.phone.replace(/[^0-9+]/g, '')}`} style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', color: 'rgba(255,255,255,0.7)', textDecoration: 'none' }}>
                 {settings.phone}
               </a>
             )}
-            {settings.whatsapp && (
+            {settings.showWhatsapp !== false && settings.whatsapp && (
               <a href={`https://wa.me/${settings.whatsapp}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontFamily: "'Sora', sans-serif", fontWeight: 500, fontSize: '13px', color: '#C8921A', textDecoration: 'none' }}>
                 <WhatsAppIcon /> WhatsApp
               </a>

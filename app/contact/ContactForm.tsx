@@ -55,6 +55,13 @@ const labelStyle: React.CSSProperties = {
   marginBottom: '0.4rem',
 }
 
+const errorStyle: React.CSSProperties = {
+  fontFamily: "'Noto Sans', sans-serif",
+  fontSize: '11px',
+  color: '#c0392b',
+  marginTop: '0.3rem',
+}
+
 export function ContactForm({ labels, inquiryEmail }: ContactFormProps) {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>()
@@ -96,7 +103,13 @@ export function ContactForm({ labels, inquiryEmail }: ContactFormProps) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
         <div>
           <label style={labelStyle} htmlFor="name">{labels.name} *</label>
-          <input id="name" style={{ ...inputStyle, borderColor: errors.name ? '#c0392b' : 'transparent' }} placeholder={labels.name} {...register('name', { required: true })} />
+          <input
+            id="name"
+            style={{ ...inputStyle, borderColor: errors.name ? '#c0392b' : 'transparent' }}
+            placeholder={labels.name}
+            {...register('name', { required: 'Name is required' })}
+          />
+          {errors.name && <p style={errorStyle}>{errors.name.message}</p>}
         </div>
         <div>
           <label style={labelStyle} htmlFor="company">{labels.company}</label>
@@ -107,7 +120,14 @@ export function ContactForm({ labels, inquiryEmail }: ContactFormProps) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
         <div>
           <label style={labelStyle} htmlFor="email">{labels.email} *</label>
-          <input id="email" type="email" style={{ ...inputStyle, borderColor: errors.email ? '#c0392b' : 'transparent' }} placeholder="you@company.com" {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/ })} />
+          <input
+            id="email"
+            type="email"
+            style={{ ...inputStyle, borderColor: errors.email ? '#c0392b' : 'transparent' }}
+            placeholder="you@company.com"
+            {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' } })}
+          />
+          {errors.email && <p style={errorStyle}>{errors.email.message}</p>}
         </div>
         <div>
           <label style={labelStyle} htmlFor="phone">{labels.phone}</label>
@@ -117,12 +137,25 @@ export function ContactForm({ labels, inquiryEmail }: ContactFormProps) {
 
       <div style={{ marginBottom: '1.25rem' }}>
         <label style={labelStyle} htmlFor="subject">{labels.subject} *</label>
-        <input id="subject" style={{ ...inputStyle, borderColor: errors.subject ? '#c0392b' : 'transparent' }} placeholder={labels.subjectPlaceholder} {...register('subject', { required: true })} />
+        <input
+          id="subject"
+          style={{ ...inputStyle, borderColor: errors.subject ? '#c0392b' : 'transparent' }}
+          placeholder={labels.subjectPlaceholder}
+          {...register('subject', { required: 'Subject is required' })}
+        />
+        {errors.subject && <p style={errorStyle}>{errors.subject.message}</p>}
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
         <label style={labelStyle} htmlFor="message">{labels.message} *</label>
-        <textarea id="message" rows={6} style={{ ...inputStyle, resize: 'vertical', borderColor: errors.message ? '#c0392b' : 'transparent' }} placeholder={labels.messagePlaceholder} {...register('message', { required: true, minLength: 20 })} />
+        <textarea
+          id="message"
+          rows={6}
+          style={{ ...inputStyle, resize: 'vertical', borderColor: errors.message ? '#c0392b' : 'transparent' }}
+          placeholder={labels.messagePlaceholder}
+          {...register('message', { required: 'Message is required' })}
+        />
+        {errors.message && <p style={errorStyle}>{errors.message.message}</p>}
       </div>
 
       {status === 'error' && (

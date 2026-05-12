@@ -16,6 +16,12 @@ export const siteSettings = defineType({
     defineField({ name: 'email', title: 'Inquiry Email', type: 'string', group: 'contact', initialValue: 'inquiry@citimaju.com' }),
     defineField({ name: 'address', title: 'Office Address', type: 'text', rows: 3, group: 'contact' }),
 
+    // VISIBILITY TOGGLES
+    defineField({ name: 'showPhone', title: 'Show Phone Number', type: 'boolean', group: 'contact', initialValue: true, description: 'Display phone number in footer and contact page.' }),
+    defineField({ name: 'showWhatsapp', title: 'Show WhatsApp Button', type: 'boolean', group: 'contact', initialValue: true, description: 'Display WhatsApp link in footer and contact page.' }),
+    defineField({ name: 'showEmail', title: 'Show Email Address', type: 'boolean', group: 'contact', initialValue: true, description: 'Display email address in footer and contact page.' }),
+    defineField({ name: 'showOfficeAddress', title: 'Show Office Address', type: 'boolean', group: 'contact', initialValue: false, description: 'Display the office address block on the contact page.' }),
+
     // NAV
     defineField({ name: 'navAbout', title: 'About Link', type: 'string', group: 'nav', initialValue: 'About' }),
     defineField({ name: 'navServices', title: 'Services Link', type: 'string', group: 'nav', initialValue: 'Services' }),
