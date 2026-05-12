@@ -20,7 +20,7 @@ export function AboutCTA({ eyebrow, heading, body, primaryCtaLabel, primaryCtaHr
   const validCredentials = credentials.filter(c => c && (c.label || c.value || c.sub))
 
   return (
-    <section style={{ padding: '7rem 0', background: '#ffffff' }}>
+    <section style={{ padding: '9rem 0', background: '#ffffff' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'center' }}>
         <div>
           {eyebrow && (
