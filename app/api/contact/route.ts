@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { getSiteSettings } from '@/sanity/lib/fetch'
 
 export async function POST(req: NextRequest) {
@@ -9,18 +9,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not set')
+    return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
+  }
+
   const settings = await getSiteSettings()
   const toAddress = settings.email || 'inquiry@citimaju.com'
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
-  })
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; color: #0D1B2E;">
@@ -46,14 +43,18 @@ export async function POST(req: NextRequest) {
   `
 
   try {
-    await transporter.sendMail({
-      from: `"CMG Website" <${process.env.SMTP_USER}>`,
+    const { error } = await resend.emails.send({
+      from: 'CMG Website <noreply@citimaju.com>',
       to: toAddress,
       replyTo: email,
       subject: `[CMG Inquiry] ${subject}`,
       html,
       text: `New inquiry from ${name}${company ? ` (${company})` : ''}\nEmail: ${email}\n${phone ? `Phone: ${phone}\n` : ''}Subject: ${subject}\n\n${message}`,
     })
+    if (error) {
+      console.error('Resend error:', error)
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    }
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error('Email send error:', err)
