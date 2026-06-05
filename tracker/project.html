@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Project Detail — CMC Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .hidden { display: none !important; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .75rem; font-size: .82rem; }
+    .meta-label { color: var(--gray-500); font-weight: 600; }
+    .meta-value { color: var(--gray-800); }
+  </style>
+</head>
+<body class="page">
+  <header class="app-header">
+    <div class="container">
+      <div style="display:flex;align-items:center;gap:.5rem;min-width:0;">
+        <button class="btn-back" id="btn-back">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clip-rule="evenodd"/></svg>
+          Back
+        </button>
+        <div style="min-width:0;">
+          <div style="font-weight:700;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:white;" id="project-title">Loading…</div>
+          <div style="font-size:.72rem;opacity:.75;color:white;" id="project-no"></div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span id="project-status" class="badge"></span>
+        <div class="header-user" id="header-user"></div>
+        <button class="btn-icon" id="btn-logout" style="background:rgba(255,255,255,.15);color:white;">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 015.25 2h5.5A2.25 2.25 0 0113 4.25v2a.75.75 0 01-1.5 0v-2a.75.75 0 00-.75-.75h-5.5a.75.75 0 00-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 00.75-.75v-2a.75.75 0 011.5 0v2A2.25 2.25 0 0110.75 18h-5.5A2.25 2.25 0 013 15.75V4.25z" clip-rule="evenodd"/><path fill-rule="evenodd" d="M19 10a.75.75 0 00-.75-.75H8.704l1.048-1.04a.75.75 0 10-1.004-1.115l-2.5 2.5a.75.75 0 000 1.11l2.5 2.5a.75.75 0 101.004-1.114L8.704 10.75H18.25A.75.75 0 0019 10z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container">
+      <div class="summary-strip">
+        <div class="summary-grid">
+          <div class="financial-row"><div class="s-label">Contract Value</div><div class="s-value" id="sum-contract">—</div></div>
+          <div><div class="s-label">Physical Progress</div><div class="s-value accent" id="sum-physical">—</div></div>
+          <div class="financial-row"><div class="s-label">Amount Claimed</div><div class="s-value" id="sum-claimed">—</div></div>
+        </div>
+        <div style="margin-top:.75rem;display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;justify-content:space-between;font-size:.68rem;opacity:.75;margin-bottom:2px;"><span>Physical</span><span class="financial-row">Claimed</span></div>
+          <div class="progress-track" style="height:7px;"><div class="progress-bar physical" id="bar-physical" style="width:0%"></div></div>
+          <div class="progress-track financial-row" style="height:7px;"><div class="progress-bar claimed" id="bar-claimed" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:1rem;">
+        <div class="card-header">
+          <h3>Project Info</h3>
+          <div style="display:flex;gap:.4rem;">
+            <button class="btn btn-ghost btn-sm admin-only hidden" id="btn-assign-users">
+              <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;"><path d="M7 8a3 3 0 100-6 3 3 0 000 6zM14.5 9a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM1.615 16.428a1.224 1.224 0 01-.569-1.175 6.002 6.002 0 0111.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 017 17a9.953 9.953 0 01-5.385-1.572zM14.5 16h-.106c.07-.297.088-.611.048-.933a7.47 7.47 0 00-1.588-3.755 4.502 4.502 0 015.874 2.636.818.818 0 01-.36.98A7.465 7.465 0 0114.5 16z"/></svg>
+              Assign
+            </button>
+            <button class="btn btn-ghost btn-sm admin-only hidden" id="btn-edit-project">
+              <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;"><path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z"/></svg>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta-grid">
+            <div class="meta-label">Client</div><div class="meta-value" id="meta-client">—</div>
+            <div class="meta-label">Location</div><div class="meta-value" id="meta-location">—</div>
+            <div class="meta-label financial-row">Contract Value</div><div class="meta-value financial-row" id="meta-contract">—</div>
+            <div class="meta-label">Start Date</div><div class="meta-value" id="meta-start">—</div>
+            <div class="meta-label">End Date</div><div class="meta-value" id="meta-end">—</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+        <h2 style="font-size:1rem;">Work Items</h2>
+        <button class="btn btn-primary btn-sm admin-only pm-only hidden" id="btn-add-item">
+          <svg viewBox="0 0 20 20" fill="currentColor" style="width:14px;height:14px;"><path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"/></svg>
+          Add Item
+        </button>
+      </div>
+      <div id="work-item-list" class="work-item-list"></div>
+      <div class="empty-state hidden" id="wi-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+        <p>No work items yet. Add items to start tracking progress.</p>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modal-item" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><h2 class="modal-title" id="modal-item-title">Add Work Item</h2><button class="btn-icon" id="modal-item-close"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg></button></div>
+      <div class="modal-body">
+        <form id="form-item" autocomplete="off">
+          <div class="form-group"><label class="form-label">Item Name <span class="required">*</span></label><input class="form-control" type="text" id="i_name" name="i_name" required placeholder="e.g. Earthworks, Piling, RC Frame…"></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" id="i_desc" name="i_desc" rows="2"></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Unit</label><input class="form-control" type="text" id="i_unit" name="i_unit" placeholder="m², m³, ls"></div>
+            <div class="form-group"><label class="form-label">Order #</label><input class="form-control" type="number" id="i_seq" name="i_seq" min="0" placeholder="1"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Quantity</label><input class="form-control" type="number" id="i_qty" name="i_qty" min="0" step="any"></div>
+            <div class="form-group"><label class="form-label">Unit Rate (RM)</label><input class="form-control" type="number" id="i_rate" name="i_rate" min="0" step="0.01"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Contract Amount (RM) <span class="required">*</span></label><input class="form-control" type="number" id="i_amount" name="i_amount" min="0" step="0.01" required><p class="form-hint">Auto-fills from Qty × Rate, or enter directly.</p></div>
+          <button type="submit" class="btn btn-primary btn-block">Save Item</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-assign" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><h2 class="modal-title">Assign Team</h2><button class="btn-icon" id="modal-assign-close"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg></button></div>
+      <div class="modal-body">
+        <p class="text-sm text-muted" style="margin-bottom:.75rem;">Toggle users to assign or remove from this project.</p>
+        <div id="assign-list" style="display:flex;flex-direction:column;gap:.5rem;"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-edit-project" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-header"><h2 class="modal-title">Edit Project</h2><button class="btn-icon" id="modal-edit-close"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/></svg></button></div>
+      <div class="modal-body">
+        <form id="form-edit-project" autocomplete="off">
+          <div class="form-row"><div class="form-group"><label class="form-label">Project Name <span class="required">*</span></label><input class="form-control" type="text" name="ep_name" required></div><div class="form-group"><label class="form-label">Project No.</label><input class="form-control" type="text" name="ep_no"></div></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">Client</label><input class="form-control" type="text" name="ep_client"></div><div class="form-group"><label class="form-label">Location</label><input class="form-control" type="text" name="ep_location"></div></div>
+          <div class="form-group"><label class="form-label">Contract Value (RM)</label><input class="form-control" type="number" name="ep_contract" min="0" step="0.01"></div>
+          <div class="form-row"><div class="form-group"><label class="form-label">Start Date</label><input class="form-control" type="date" name="ep_start"></div><div class="form-group"><label class="form-label">End Date</label><input class="form-control" type="date" name="ep_end"></div></div>
+          <div class="form-group"><label class="form-label">Status</label><select class="form-control" name="ep_status"><option value="active">Active</option><option value="tender">Tender</option><option value="on_hold">On Hold</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select></div>
+          <div class="form-group"><label class="form-label">Description</label><textarea class="form-control" name="ep_desc" rows="2"></textarea></div>
+          <button type="submit" class="btn btn-primary btn-block">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/project.js"></script>
+</body>
+</html>
