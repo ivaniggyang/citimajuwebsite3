@@ -17,6 +17,8 @@ interface Service {
   title: string
   category: string
   shortDescription: string
+  slug?: { current: string }
+  hasDetail?: boolean
 }
 
 const categoryGroups = [
@@ -60,13 +62,21 @@ export default async function ServicesPage() {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
                     {group.map(srv => (
-                      <div key={srv._id} style={{ background: '#F7F4EF', padding: '2.75rem' }}>
+                      <div key={srv._id} style={{ background: '#F7F4EF', padding: '2.75rem', display: 'flex', flexDirection: 'column' }}>
                         <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '17px', letterSpacing: '0.01em', color: '#0D1B2E', marginBottom: '0.875rem', lineHeight: 1.3 }}>
                           {srv.title}
                         </h3>
                         <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
                           {srv.shortDescription}
                         </p>
+                        {srv.hasDetail && srv.slug?.current && (
+                          <Link
+                            href={`/services/${srv.slug.current}`}
+                            style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '12px', letterSpacing: '0.06em', color: '#1B4F8A', textDecoration: 'none', borderBottom: '1px solid #C8921A', paddingBottom: '2px', marginTop: '1.5rem', alignSelf: 'flex-start' }}
+                          >
+                            Learn More →
+                          </Link>
+                        )}
                       </div>
                     ))}
                   </div>
