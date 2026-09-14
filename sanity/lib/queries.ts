@@ -47,6 +47,13 @@ export const PROJECT_BY_SLUG_QUERY = groq`
 
 export const ALL_SERVICES_QUERY = groq`
   *[_type == "service" && published == true] | order(order asc) {
-    _id, title, slug, category, shortDescription
+    _id, title, slug, category, shortDescription,
+    "hasDetail": count(fullDescription) > 0
+  }
+`
+
+export const SERVICE_BY_SLUG_QUERY = groq`
+  *[_type == "service" && slug.current == $slug][0] {
+    _id, title, slug, category, shortDescription, fullDescription
   }
 `
