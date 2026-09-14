@@ -1,0 +1,46 @@
+VERDICT: SUCCEEDED
+EXIT_CODE=0
+
+--- COMPILE STATUS OF CHANGED FILES ---
+app/services/[slug]/page.tsx: no TypeScript/compile errors
+app/services/page.tsx: no TypeScript/compile errors
+sanity/lib/queries.ts: no TypeScript/compile errors
+(TypeScript step finished successfully; both /services and /services/[slug] routes compiled and appear in the route list. No errors reported for any of the three files.)
+
+--- LAST 80 LINES OF BUILD LOG ---
+
+> cmg-website@0.1.0 build
+> next build
+
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.4 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 41s
+  Running TypeScript ...
+  Finished TypeScript in 5.6s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/3) ...
+✓ Generating static pages using 3 workers (3/3) in 211ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /about
+├ ƒ /api/contact
+├ ƒ /contact
+├ ƒ /projects
+├ ƒ /projects/[slug]
+├ ƒ /services
+├ ƒ /services/[slug]
+└ ƒ /studio/[[...tool]]
+
+
+ƒ  (Dynamic)  server-rendered on demand
+
+EXIT_CODE=0
