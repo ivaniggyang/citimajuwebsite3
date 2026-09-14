@@ -69,7 +69,7 @@ export default async function ServicesPage() {
                         <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
                           {srv.shortDescription}
                         </p>
-                        {srv.hasDetail && srv.slug?.current && (
+                        {srv.slug?.current && (
                           <Link
                             href={`/services/${srv.slug.current}`}
                             style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '12px', letterSpacing: '0.06em', color: '#1B4F8A', textDecoration: 'none', borderBottom: '1px solid #C8921A', paddingBottom: '2px', marginTop: '1.5rem', alignSelf: 'flex-start' }}
