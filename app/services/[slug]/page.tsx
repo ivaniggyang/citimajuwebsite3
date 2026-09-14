@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
 import { SERVICE_BY_SLUG_QUERY } from '@/sanity/lib/queries'
+import { Slideshow } from '@/components/ui/Slideshow'
 
 export const revalidate = 60
 
@@ -21,24 +22,29 @@ interface PortableBlock {
   children?: PortableSpan[]
 }
 
+interface Category {
+  id?: string
+  title?: string
+  value?: string
+  order?: number
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SanityImage = any
+
 interface Service {
   _id: string
   title: string
   slug: { current: string }
-  category: string
+  category?: Category
   shortDescription?: string
   fullDescription?: PortableBlock[]
+  coverImage?: SanityImage
+  gallery?: SanityImage[]
 }
 
 interface Props {
   params: Promise<{ slug: string }>
-}
-
-const categoryLabels: Record<string, string> = {
-  'water-utilities': 'Water & Utilities',
-  'civil-structural': 'Civil & Structural',
-  'renovation-finishing': 'Renovation & Finishing',
-  'engineering': 'Engineering',
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -139,6 +145,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!service) notFound()
 
   const hasFull = Array.isArray(service.fullDescription) && service.fullDescription.length > 0
+  const slides = [service.coverImage, ...(service.gallery || [])].filter(Boolean)
 
   return (
     <>
@@ -151,9 +158,11 @@ export default async function ServiceDetailPage({ params }: Props) {
           >
             ← All Services
           </Link>
-          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.65rem' }}>
-            {categoryLabels[service.category] || service.category}
-          </p>
+          {service.category?.title && (
+            <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.65rem' }}>
+              {service.category.title}
+            </p>
+          )}
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2rem, 4vw, 3.25rem)', color: '#ffffff', lineHeight: 1.1 }}>
             {service.title}
           </h1>
@@ -177,6 +186,12 @@ export default async function ServiceDetailPage({ params }: Props) {
             <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '15px', lineHeight: 1.8, color: '#6B849C' }}>
               More detail about this service is coming soon.
             </p>
+          )}
+
+          {slides.length > 0 && (
+            <div style={{ marginTop: '3.5rem' }}>
+              <Slideshow images={slides} alt={service.title} />
+            </div>
           )}
         </div>
       </section>

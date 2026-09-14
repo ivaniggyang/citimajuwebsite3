@@ -21,16 +21,13 @@ export const project = defineType({
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'string',
+      type: 'reference',
+      to: [{ type: 'category' }],
       options: {
-        list: [
-          { title: 'Water Reticulation', value: 'water-reticulation' },
-          { title: 'Civil & Structural', value: 'civil-structural' },
-          { title: 'Renovation', value: 'renovation' },
-          { title: 'Hot Tapping', value: 'hot-tapping' },
-          { title: 'Engineering', value: 'engineering' },
-        ],
+        filter: '$scope in appliesTo',
+        filterParams: { scope: 'project' },
       },
+      description: 'Managed under "Category / Label". Add or remove labels there.',
       validation: Rule => Rule.required(),
     }),
     defineField({
@@ -106,7 +103,7 @@ export const project = defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'category',
+      subtitle: 'category.title',
       media: 'coverImage',
     },
   },

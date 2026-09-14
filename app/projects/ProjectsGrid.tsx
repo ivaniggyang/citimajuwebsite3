@@ -5,11 +5,18 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 
+interface Category {
+  id?: string
+  title?: string
+  value?: string
+  order?: number
+}
+
 interface Project {
   _id: string
   title: string
   slug: { current: string }
-  category: string
+  category?: Category
   client?: string
   location?: string
   completionYear?: number
@@ -18,33 +25,29 @@ interface Project {
   description?: string
 }
 
-const categoryLabels: Record<string, string> = {
-  'water-reticulation': 'Water Reticulation',
-  'civil-structural': 'Civil & Structural',
-  'renovation': 'Renovation',
-  'hot-tapping': 'Hot Tapping',
-  'engineering': 'Engineering',
-}
-
-const filters = [
-  { value: 'all', label: 'All Projects' },
-  { value: 'water-reticulation', label: 'Water Reticulation' },
-  { value: 'hot-tapping', label: 'Hot Tapping' },
-  { value: 'civil-structural', label: 'Civil & Structural' },
-  { value: 'renovation', label: 'Renovation' },
-  { value: 'engineering', label: 'Engineering' },
-]
-
 const PLACEHOLDER_PROJECTS: Project[] = [
-  { _id: '1', title: 'Sg. Buloh Water Reticulation — Phase 3', slug: { current: '#' }, category: 'water-reticulation', location: 'Shah Alam, Selangor', completionYear: 2024, client: 'Air Selangor' },
-  { _id: '2', title: 'Live Main Connection, Puchong Industrial Park', slug: { current: '#' }, category: 'hot-tapping', location: 'Puchong, Selangor', completionYear: 2024 },
-  { _id: '3', title: 'Structural Steel Canopy, Klang Valley Distribution Hub', slug: { current: '#' }, category: 'civil-structural', location: 'Klang, Selangor', completionYear: 2023 },
-  { _id: '4', title: 'Full Renovation, Damansara Office Tower Level 12–14', slug: { current: '#' }, category: 'renovation', location: 'Damansara, Kuala Lumpur', completionYear: 2023 },
-  { _id: '5', title: 'Waterproofing & Facade Repair, Shah Alam Complex', slug: { current: '#' }, category: 'renovation', location: 'Shah Alam, Selangor', completionYear: 2023 },
-  { _id: '6', title: 'Reticulation Network Extension — Ara Damansara', slug: { current: '#' }, category: 'water-reticulation', location: 'Ara Damansara, Selangor', completionYear: 2022, client: 'Air Selangor' },
-  { _id: '7', title: 'Mezzanine Steel Structure, Subang Industrial', slug: { current: '#' }, category: 'civil-structural', location: 'Subang, Selangor', completionYear: 2022 },
-  { _id: '8', title: 'Hot Tap Connection — 400mm DI Main, Petaling Jaya', slug: { current: '#' }, category: 'hot-tapping', location: 'Petaling Jaya, Selangor', completionYear: 2022 },
+  { _id: '1', title: 'Sg. Buloh Water Reticulation — Phase 3', slug: { current: '#' }, category: { title: 'Water Reticulation', value: 'water-reticulation', order: 1 }, location: 'Shah Alam, Selangor', completionYear: 2024, client: 'Air Selangor' },
+  { _id: '2', title: 'Live Main Connection, Puchong Industrial Park', slug: { current: '#' }, category: { title: 'Hot Tapping', value: 'hot-tapping', order: 2 }, location: 'Puchong, Selangor', completionYear: 2024 },
+  { _id: '3', title: 'Structural Steel Canopy, Klang Valley Distribution Hub', slug: { current: '#' }, category: { title: 'Civil & Structural', value: 'civil-structural', order: 3 }, location: 'Klang, Selangor', completionYear: 2023 },
+  { _id: '4', title: 'Full Renovation, Damansara Office Tower Level 12–14', slug: { current: '#' }, category: { title: 'Renovation', value: 'renovation', order: 4 }, location: 'Damansara, Kuala Lumpur', completionYear: 2023 },
+  { _id: '5', title: 'Waterproofing & Facade Repair, Shah Alam Complex', slug: { current: '#' }, category: { title: 'Renovation', value: 'renovation', order: 4 }, location: 'Shah Alam, Selangor', completionYear: 2023 },
+  { _id: '6', title: 'Reticulation Network Extension — Ara Damansara', slug: { current: '#' }, category: { title: 'Water Reticulation', value: 'water-reticulation', order: 1 }, location: 'Ara Damansara, Selangor', completionYear: 2022, client: 'Air Selangor' },
+  { _id: '7', title: 'Mezzanine Steel Structure, Subang Industrial', slug: { current: '#' }, category: { title: 'Civil & Structural', value: 'civil-structural', order: 3 }, location: 'Subang, Selangor', completionYear: 2022 },
+  { _id: '8', title: 'Hot Tap Connection — 400mm DI Main, Petaling Jaya', slug: { current: '#' }, category: { title: 'Hot Tapping', value: 'hot-tapping', order: 2 }, location: 'Petaling Jaya, Selangor', completionYear: 2022 },
 ]
+
+// Derive the filter list from the categories the projects actually
+// reference. Labels are managed in the Studio ("Category / Label"), so
+// filters appear/disappear automatically as labels are added or removed.
+function deriveFilters(projects: Project[]) {
+  const map = new Map<string, { value: string; label: string; order: number }>()
+  for (const p of projects) {
+    const value = p.category?.value
+    if (!value || map.has(value)) continue
+    map.set(value, { value, label: p.category?.title || value, order: p.category?.order ?? 999 })
+  }
+  return [...map.values()].sort((a, b) => a.order - b.order || a.label.localeCompare(b.label))
+}
 
 interface ProjectsGridProps {
   projects: Project[]
@@ -55,8 +58,8 @@ interface ProjectsGridProps {
 export function ProjectsGrid({ projects, filterAllLabel, noProjectsText }: ProjectsGridProps) {
   const [active, setActive] = useState('all')
   const displayProjects = projects.length > 0 ? projects : PLACEHOLDER_PROJECTS
-  const filtered = active === 'all' ? displayProjects : displayProjects.filter(p => p.category === active)
-  const filtersWithLabel = [{ value: 'all', label: filterAllLabel }, ...filters.slice(1)]
+  const filtered = active === 'all' ? displayProjects : displayProjects.filter(p => p.category?.value === active)
+  const filtersWithLabel = [{ value: 'all', label: filterAllLabel }, ...deriveFilters(displayProjects)]
 
   return (
     <section style={{ padding: '4rem 0 6rem', background: '#ffffff' }}>
@@ -133,11 +136,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </div>
           )}
           {/* Category badge */}
-          <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
-            <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#071E3D', background: '#C8921A', padding: '0.25rem 0.625rem' }}>
-              {categoryLabels[project.category] || project.category}
-            </span>
-          </div>
+          {project.category?.title && (
+            <div style={{ position: 'absolute', top: '1rem', left: '1rem' }}>
+              <span style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '10px', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#071E3D', background: '#C8921A', padding: '0.25rem 0.625rem' }}>
+                {project.category.title}
+              </span>
+            </div>
+          )}
         </div>
         {/* Content */}
         <div style={{ padding: '1.5rem 1.75rem 2rem' }}>

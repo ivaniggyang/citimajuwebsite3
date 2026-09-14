@@ -20,15 +20,13 @@ export const service = defineType({
     defineField({
       name: 'category',
       title: 'Category',
-      type: 'string',
+      type: 'reference',
+      to: [{ type: 'category' }],
       options: {
-        list: [
-          { title: 'Water & Utilities', value: 'water-utilities' },
-          { title: 'Civil & Structural', value: 'civil-structural' },
-          { title: 'Renovation & Finishing', value: 'renovation-finishing' },
-          { title: 'Engineering', value: 'engineering' },
-        ],
+        filter: '$scope in appliesTo',
+        filterParams: { scope: 'service' },
       },
+      description: 'Managed under "Category / Label". Add or remove labels there.',
     }),
     defineField({
       name: 'shortDescription',
@@ -36,6 +34,20 @@ export const service = defineType({
       type: 'text',
       rows: 2,
       description: 'One or two sentences. Used on cards and listings.',
+    }),
+    defineField({
+      name: 'coverImage',
+      title: 'Cover Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Shown on the service card.',
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Photo Gallery',
+      type: 'array',
+      of: [{ type: 'image', options: { hotspot: true } }],
+      description: 'Shown as a slideshow on the service detail page.',
     }),
     defineField({
       name: 'fullDescription',
@@ -64,6 +76,6 @@ export const service = defineType({
     },
   ],
   preview: {
-    select: { title: 'title', subtitle: 'category' },
+    select: { title: 'title', subtitle: 'category.title', media: 'coverImage' },
   },
 })
