@@ -1,12 +1,26 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
+import { urlFor } from '@/sanity/lib/image'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SanityImage = any
+
+interface Category {
+  id?: string
+  title?: string
+  value?: string
+  order?: number
+}
 
 interface Service {
   _id: string
   title: string
-  category: string
+  category?: Category
   shortDescription: string
+  slug?: { current: string }
+  coverImage?: SanityImage
 }
 
 interface ServicesSectionProps {
@@ -44,16 +58,37 @@ export function ServicesSection({ eyebrow, heading, viewAllLabel, services }: Se
           {displayServices.map((service) => (
             <div
               key={service._id}
-              style={{ background: '#ffffff', padding: '2.75rem', transition: 'background 0.2s', borderBottom: `2px solid ${categoryAccents[service.category] || '#1B4F8A'}` }}
+              style={{ background: '#ffffff', transition: 'background 0.2s', borderBottom: `2px solid ${categoryAccents[service.category?.value || ''] || '#1B4F8A'}`, display: 'flex', flexDirection: 'column' }}
               onMouseEnter={e => (e.currentTarget.style.background = '#F0EDE7')}
               onMouseLeave={e => (e.currentTarget.style.background = '#ffffff')}
             >
+              {service.coverImage && (
+                <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 10', overflow: 'hidden' }}>
+                  <Image
+                    src={urlFor(service.coverImage).width(640).height(400).url()}
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+              )}
+              <div style={{ padding: '2.75rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
               <h3 style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '17px', letterSpacing: '0.01em', color: '#0D1B2E', marginBottom: '1rem', lineHeight: 1.3 }}>
                 {service.title}
               </h3>
               <p style={{ fontFamily: "'Noto Sans', sans-serif", fontSize: '14px', lineHeight: 1.75, color: '#3A5068' }}>
                 {service.shortDescription}
               </p>
+              {service.slug?.current && (
+                <Link
+                  href={`/services/${service.slug.current}`}
+                  style={{ fontFamily: "'Sora', sans-serif", fontWeight: 600, fontSize: '12px', letterSpacing: '0.06em', color: '#1B4F8A', textDecoration: 'none', borderBottom: '1px solid #C8921A', paddingBottom: '2px', marginTop: '1.5rem', alignSelf: 'flex-start' }}
+                >
+                  Learn More →
+                </Link>
+              )}
+              </div>
             </div>
           ))}
         </div>

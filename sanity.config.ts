@@ -31,6 +31,7 @@ export default defineConfig({
             S.divider(),
             S.documentTypeListItem('project').title('Projects (Portfolio)'),
             S.documentTypeListItem('service').title('Services (Listings)'),
+            S.documentTypeListItem('category').title('Categories / Labels'),
           ]),
     }),
     visionTool(),

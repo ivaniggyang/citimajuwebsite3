@@ -22,14 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const categoryLabels: Record<string, string> = {
-  'water-reticulation': 'Water Reticulation',
-  'civil-structural': 'Civil & Structural',
-  'renovation': 'Renovation',
-  'hot-tapping': 'Hot Tapping',
-  'engineering': 'Engineering',
-}
-
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params
   const project = await client.fetch(PROJECT_BY_SLUG_QUERY, { slug }).catch(() => null)
@@ -53,9 +45,11 @@ export default async function ProjectPage({ params }: Props) {
           <Link href="/projects" style={{ fontFamily: "'Sora', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.55)', textDecoration: 'none', letterSpacing: '0.04em', marginBottom: '1rem', display: 'inline-block' }}>
             ← All Projects
           </Link>
-          <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.5rem' }}>
-            {categoryLabels[project.category] || project.category}
-          </p>
+          {project.category?.title && (
+            <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.5rem' }}>
+              {project.category.title}
+            </p>
+          )}
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#ffffff', lineHeight: 1.1 }}>
             {project.title}
           </h1>
@@ -87,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
             </p>
             <dl style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {[
-                { term: 'Category', value: categoryLabels[project.category] },
+                { term: 'Category', value: project.category?.title },
                 project.client && { term: 'Client', value: project.client },
                 project.location && { term: 'Location', value: project.location },
                 project.completionYear && { term: 'Completed', value: String(project.completionYear) },

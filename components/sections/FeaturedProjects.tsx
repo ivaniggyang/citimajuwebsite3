@@ -2,11 +2,18 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 
+interface Category {
+  id?: string
+  title?: string
+  value?: string
+  order?: number
+}
+
 interface Project {
   _id: string
   title: string
   slug: { current: string }
-  category: string
+  category?: Category
   client?: string
   location?: string
   completionYear?: number
@@ -19,14 +26,6 @@ interface FeaturedProjectsProps {
   heading: string
   viewAllLabel: string
   projects: Project[]
-}
-
-const categoryLabels: Record<string, string> = {
-  'water-reticulation': 'Water Reticulation',
-  'civil-structural': 'Civil & Structural',
-  'renovation': 'Renovation',
-  'hot-tapping': 'Hot Tapping',
-  'engineering': 'Engineering',
 }
 
 export function FeaturedProjects({ eyebrow, heading, viewAllLabel, projects }: FeaturedProjectsProps) {
@@ -121,7 +120,7 @@ function ProjectCard({ project, large }: { project: Project; large?: boolean }) 
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(7,30,61,0.92) 0%, rgba(7,30,61,0.3) 50%, transparent 100%)' }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: large ? '2.5rem' : '1.75rem' }}>
           <p style={{ fontFamily: "'Sora', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#C8921A', marginBottom: '0.5rem' }}>
-            {categoryLabels[project.category] || project.category}{project.completionYear ? ` · ${project.completionYear}` : ''}
+            {[project.category?.title, project.completionYear].filter(Boolean).join(' · ')}
           </p>
           <h3 style={{ fontFamily: large ? "'Cormorant Garamond', serif" : "'Sora', sans-serif", fontWeight: large ? 400 : 600, fontSize: large ? 'clamp(1.5rem, 2.5vw, 2.25rem)' : '15px', color: '#ffffff', lineHeight: 1.25 }}>
             {project.title}

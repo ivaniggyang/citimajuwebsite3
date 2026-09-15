@@ -24,29 +24,43 @@ export const CONTACT_PAGE_QUERY = groq`
   *[_type == "contactPage"][0]
 `
 
+// Dereference a referenced category document into a flat object the
+// frontend can use directly for labels, filtering, and ordering.
+const CATEGORY_PROJECTION = groq`
+  category->{ "id": _id, title, "value": value.current, order }
+`
+
 export const FEATURED_PROJECTS_QUERY = groq`
   *[_type == "project" && published == true] | order(featured desc, completionYear desc) [0...6] {
-    _id, title, slug, category, client, location, completionYear,
+    _id, title, slug, ${CATEGORY_PROJECTION}, client, location, completionYear,
     coverImage, description
   }
 `
 
 export const ALL_PROJECTS_QUERY = groq`
   *[_type == "project" && published == true] | order(completionYear desc) {
-    _id, title, slug, category, entity, client, location, completionYear,
+    _id, title, slug, ${CATEGORY_PROJECTION}, entity, client, location, completionYear,
     contractValue, coverImage, description
   }
 `
 
 export const PROJECT_BY_SLUG_QUERY = groq`
   *[_type == "project" && slug.current == $slug][0] {
-    _id, title, slug, category, entity, client, location, completionYear,
+    _id, title, slug, ${CATEGORY_PROJECTION}, entity, client, location, completionYear,
     contractValue, description, coverImage, gallery
   }
 `
 
 export const ALL_SERVICES_QUERY = groq`
   *[_type == "service" && published == true] | order(order asc) {
-    _id, title, slug, category, shortDescription
+    _id, title, slug, ${CATEGORY_PROJECTION}, shortDescription, coverImage,
+    "hasDetail": count(fullDescription) > 0
+  }
+`
+
+export const SERVICE_BY_SLUG_QUERY = groq`
+  *[_type == "service" && slug.current == $slug][0] {
+    _id, title, slug, ${CATEGORY_PROJECTION}, shortDescription, fullDescription,
+    coverImage, gallery
   }
 `
